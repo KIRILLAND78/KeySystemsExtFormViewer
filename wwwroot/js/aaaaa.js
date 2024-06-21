@@ -1,4 +1,4 @@
-﻿/// <reference path="../lib/extjs/dist/js/ext-all-debug.d.ts" />
+﻿/// <reference path="../lib/extjs/dist/js/ext-6.2.0-modern-all.d.ts" />
 Ext.application({
     name: 'MyApp',
     launch: () => {
