@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "checkJs": true
+  },
+  "include": [
+    "lib/extjs/dist/js/ext-all-debug.js",
+    "js/**/*.js"
+  ]
+}
