@@ -1,33 +1,75 @@
 ﻿/// <reference path="../lib/extjs/dist/js/ext-6.2.0-modern-all.d.ts" />
+
+var buttons = [
+    {
+        xtype: 'button',
+        name: 'A',
+        text: 'A',
+        height: '20px',
+        width: '20px', margin: "5", padding: 0,
+        handler: function () {
+        }
+    },
+    {
+        xtype: 'button',
+        name: 'B',
+        text: 'B',
+        height: '20px',
+        width: '20px', margin: "5", padding: 0,
+        handler: function () {
+        }
+    },
+    {
+        xtype: 'button',
+        name: 'C',
+        text: 'C',
+        height: '20px',
+        width: '20px', margin: "5", padding: 0,
+        handler: function () {
+        }
+    }
+];
+Ext.define('TreeButtons', {
+    extend: 'Ext.Panel',
+    height: "100%",
+    layout: 'vbox',
+    bodyPadding: '10px',
+    items: buttons
+})
 Ext.application({
     name: 'MyApp',
     launch: () => {
 
 
-        var container = Ext.getBody();
-        //container.setStyle({
-        //    width: '100%',
-        //    height: '100%',
-        //    overflow: 'hidden'
-        //});
+        var container = Ext.get('KSExtApp');
+        console.log(container);
+        container.setStyle({
+            width: '100%',
+            height: '100%'
+        });
         var leftUpForm = Ext.create('Ext.form.Panel',
             {
-                width: '50%',
+                width: '70%',
+                layout: 'vbox',
+                bodyPadding: 10,
                 items: [
-                {
-                    xtype: 'textfield',
-                    name: 'code',
-                    fieldLabel: 'Код'
-                },
-                {
-                    xtype: 'textfield',
-                    name: 'name',
-                    fieldLabel: 'Наименование'
-                }
+                    {
+                        xtype: 'textfield',
+                        name: 'code',
+                        fieldLabel: 'Код',
+                        width:'100%'
+                    },
+                    {
+                        xtype: 'textarea',
+                        name: 'name',
+                        fieldLabel: 'Наименование',
+                        width: '100%'
+                    }
             ]
         });
         var rightUpForm = Ext.create('Ext.form.Panel',
             {
+            layout: 'vbox',
             items: [
                 {
                     xtype: 'checkbox',
@@ -48,68 +90,90 @@ Ext.application({
             ]
         });
 
-        Ext.create('Ext.Panel', {
-            renderTo: container,
+        var tree = Ext.create('Ext.Panel', {
+            title: 'Логическая структура',
+            height: '100%', flex: 1,
             layout: 'hbox',
-            items: [leftUpForm, rightUpForm,]
+            items: [
+                Ext.create('TreeButtons'),
+                Ext.create('Ext.tree.Panel', {
+                    flex:1,
+                    height: "100%", 
+                    rootVisible: true,
+                    store:
+                        Ext.create('Ext.data.TreeStore', {
+                            root: {
+                                text: "Логическая структура",
+                                expanded: true,
+                                children: [
+                                    { text: "Data подписания ЭП", leaf: true },
+                                    { text: "Подписанты", leaf: true },
+                                    { text: "Уровни ЭП", leaf: true },
+                                    { text: "Бюджет", leaf: true },
+                                    { text: "Версия", leaf: true },
+                                ]
+                            }
+                        })
+            })
+            ]
         });
-        var tree = Ext.create('Ext.tree.Panel', {
-            title: 'TreeGrid',
-            width: '33%',
-            fields: ['name', 'description'],
-            columns: [{
-                xtype: 'treecolumn',
-                text: 'Name',
-                dataIndex: 'name',
-                width: 150,
-                sortable: true
-            }, {
-                text: 'Description',
-                dataIndex: 'description',
-                flex: 1,
-                sortable: true
-            }],
-            root: {
-                name: 'Root',
-                description: 'Root description',
-                expanded: true,
-                children: [{
-                    name: 'Child 1',
-                    description: 'Description 1',
-                    leaf: true
-                },
-                    {
-                    name: 'Child 2',
-                    description: 'Description 2',
-                    leaf: true
-                }]
-            }
-        });
+
         var unknownPanel = Ext.create('Ext.form.Panel', {
-            width: '33%',
-            items: [
-                {
-                    xtype: 'textfield',
-                    name: 'code',
-                    fieldLabel: 'Блаблабла 1'
-                }
-            ]
-        });
+            title: 'Свойства атрибутов', flex: 1,
+            items: [Ext.create('Ext.form.Panel', {
+                layout: 'hbox',
+                items: buttons,
+            }),
+                Ext.create('Ext.grid.Panel', {
+                store: Ext.create('Ext.data.Store', {
+                    fields: ['name', 'value'],
+                    data: [
+                        { 'name': 'Атрибут1', 'value': 'Значение1' },
+                        { 'name': 'Атрибут2', 'value': 'Значение2' }
+                    ]
+                }),
+                columns: [
+                    { text: 'Attribute', dataIndex: 'name' },
+                    { text: 'Value', dataIndex: 'value', flex: 1 }
+                ],
+            })]
+        })
+            
         var detailsPanel = Ext.create('Ext.form.Panel', {
-            width: '33%',
+            title: 'Контроль уникальности',
+            flex: 1,
+            bodyPadding: 10,
+            defaultType: 'checkbox',
             items: [
                 {
-                    xtype: 'textfield',
-                    name: 'code',
-                    fieldLabel: 'Блаблабла 2'
+                    boxLabel: 'Комбинации',
+                    name: 'combination',
+                    inputValue: '1'
                 }
             ]
         });
+        var upPanel = Ext.create('Ext.form.Panel', {
+            items: buttons,
+        })
+        //раскидывание элементов по местам
         Ext.create('Ext.Panel', {
+            height: '100%',
+            layout: 'vbox',
             renderTo: container,
-            layout: 'hbox',
-            items: [tree, unknownPanel, detailsPanel,]
-        });
+            items: [upPanel,
+                Ext.create('Ext.Panel', {
+                layout: 'hbox',
+                width: "100%",
+                items: [leftUpForm, rightUpForm]
+            }),
+                Ext.create('Ext.Panel', {
+                    layout: 'hbox',
+                    width: "100%",
+                    flex: 1,
+                    items: [tree, unknownPanel, detailsPanel]
+                })
+            ]
+        })
     }
 
 });
