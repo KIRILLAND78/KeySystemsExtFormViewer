@@ -1,5 +1,6 @@
 ﻿/// <reference path="../lib/extjs/dist/js/ext-6.2.0-modern-all.d.ts" />
 
+//это примеры кнопок
 var buttons = [
     {
         xtype: 'button',
@@ -47,23 +48,28 @@ var buttons = [
         }
     }
 ];
+
+//пример определения своего класса
 Ext.define('TreeButtons', {
     extend: 'Ext.Panel',
     height: "100%",
     layout: 'vbox',
     items: buttons
 })
+
+//сам код
 Ext.application({
     name: 'MyApp',
     launch: () => {
 
 
-        var container = Ext.get('KSExtApp');
-        console.log(container);
+        var container = Ext.get('KSExtApp'); //подбираем специально созданный заранее div
         container.setStyle({
             width: '100%',
             height: '100%'
         });
+
+        //по отдельности создаем элементы
         var leftUpForm = Ext.create('Ext.form.Panel',
             {
                 width: '70%',
@@ -86,6 +92,7 @@ Ext.application({
             });
         var rightUpForm = Ext.create('Ext.form.Panel',
             {
+                width: '100%',
                 layout: 'vbox',
                 items: [
                     {
@@ -144,7 +151,6 @@ Ext.application({
                     layout: 'hbox',
                     items: [
                         Ext.create('TreeButtons'),
-                        //Ext.create('Ext.Panel', {flex:1})
                         treePanel
                     ]
                 }),
@@ -171,14 +177,15 @@ Ext.application({
             layout: 'vbox',
             frame: true,
             items: [Ext.create('Ext.form.Panel', {
+                width: '100%',
                 layout: 'hbox',
-                items: buttons.slice(0,3),
+                items: buttons.slice(0, 3),
             }),
-                Ext.create('Ext.grid.Panel', {
-                    flex: 5,
-                    frame: true,
-                    width: '100%',
-                    store: Ext.create('Ext.data.Store', {
+            Ext.create('Ext.grid.Panel', {
+                flex: 5,
+                frame: true,
+                width: '100%',
+                store: Ext.create('Ext.data.Store', {
                     fields: ['name', 'value'],
                     data: [
                         { 'name': 'Атрибут1', 'value': 'Значение1' },
@@ -189,11 +196,11 @@ Ext.application({
                     { text: 'Attribute', dataIndex: 'name' },
                     { text: 'Value', dataIndex: 'value', flex: 1 }
                 ],
-                }),
-                Ext.create('Ext.Panel', {
-                    flex: 1,
-                    width: '100%', frame: true
-                })
+            }),
+            Ext.create('Ext.Panel', {
+                flex: 1,
+                width: '100%', frame: true
+            })
             ]
         })
         var detailsPanel = Ext.create('Ext.tab.Panel', {
@@ -205,65 +212,73 @@ Ext.application({
                 layout: 'vbox',
                 tooltip: 'Контроль уникальности',
                 frame: true,
-                items: [Ext.create('Ext.form.Panel', {
-                    layout: 'hbox',
-                    items: [...buttons.slice(0, 3),
-                    {
-                        xtype: 'textfield',
-                        labelWidth: false,
-                        name: 'filter',
-                        fieldLabel: 'Фильтр:',
-                    },]
-                }),
-                        Ext.create('Ext.form.Panel', {
-                            width: '100%',
-                            flex: 5,
-                            frame: true,
-                            defaultType: 'checkbox',
-                            items: [
-                                {
-                                    boxLabel: 'Комбинации',
-                                    name: 'combination',
-                                    inputValue: '1',
-                                    margin: '0 0 0 0',
-                                },
-                                {
-                                    boxLabel: 'Комбинации2',
-                                    name: 'combination2',
-                                    inputValue: '1',
-                                    margin: '0 0 0 0',
-                                },
-                                {
-                                    boxLabel: 'Комбинации3',
-                                    name: 'combination3',
-                                    inputValue: '1',
-                                    margin: '0 0 0 0',//вроде как есть defaultMargin
-                                }
-                            ]
-                        }),
-                        Ext.create('Ext.form.Panel', {
-                            width: '100%',
-                            layout: 'vbox',
-                            flex: 3,
-                            frame: true,
-                            items: [
-                                Ext.create('Ext.form.Panel', {
-                                    layout: 'hbox',
-                                    items: buttons.slice(0, 3)
-                                }),
-                                Ext.create('Ext.form.Panel', {
-                                    flex: 3,
-                                    width: '100%',
-                                    frame: true,
-                                }),
-                                Ext.create('Ext.form.Panel', {
-                                    flex: 2,
-                                    width: '100%',
-                                    frame: true,
-                                }),
-                            ]
-                        })
-                    ]
+                items: [
+                    Ext.create('Ext.form.Panel', {
+                        width: '100%',
+                        layout: {
+                            type: 'hbox',
+                            align: 'center'
+                        },
+                        items: [...buttons.slice(0, 3),
+                        {
+                            xtype: 'textfield',
+                            labelWidth: false,
+                            name: 'filter',
+                            fieldLabel: 'Фильтр:',
+                        },]
+                    }),
+                    Ext.create('Ext.form.Panel', {
+                        width: '100%',
+                        flex: 5,
+                        frame: true,
+                        defaultType: 'checkbox',
+                        items: [
+                            {
+                                boxLabel: 'Комбинации',
+                                name: 'combination',
+                                inputValue: '1',
+                                margin: '0 0 0 0',
+                            },
+                            {
+                                boxLabel: 'Комбинации2',
+                                name: 'combination2',
+                                inputValue: '1',
+                                margin: '0 0 0 0',
+                            },
+                            {
+                                boxLabel: 'Комбинации3',
+                                name: 'combination3',
+                                inputValue: '1',
+                                margin: '0 0 0 0',//вроде как есть defaultMargin, но почему-то не сработал
+                            }
+                        ]
+                    }),
+                    Ext.create('Ext.form.Panel', {
+                        width: '100%',
+                        layout: 'vbox',
+                        flex: 3,
+                        split: true,
+                        collapsible: true,
+                        frame: true,
+                        items: [
+                            Ext.create('Ext.form.Panel', {
+                                layout: 'hbox',
+                                width: '100%',
+                                items: buttons.slice(0, 3)
+                            }),
+                            Ext.create('Ext.form.Panel', {
+                                flex: 3,
+                                width: '100%',
+                                frame: true,
+                            }),
+                            Ext.create('Ext.form.Panel', {
+                                flex: 2,
+                                width: '100%',
+                                frame: true,
+                            }),
+                        ]
+                    })
+                ]
             }, {
                 title: 'Bar',
                 tabConfig: {
@@ -274,7 +289,7 @@ Ext.application({
                 }
             }]
         });
-        
+
         //раскидывание элементов по местам
         Ext.create('Ext.form.Panel', {
             items: buttons,
@@ -287,10 +302,10 @@ Ext.application({
             renderTo: container,
             items: [
                 Ext.create('Ext.Panel', {
-                layout: 'hbox',
-                width: "100%",
-                items: [leftUpForm, rightUpForm]
-            }),
+                    layout: 'hbox',
+                    width: "100%",
+                    items: [leftUpForm, rightUpForm]
+                }),
                 Ext.create('Ext.Panel', {
                     layout: 'hbox',
                     width: "100%",
