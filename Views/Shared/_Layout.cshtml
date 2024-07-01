@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="display: flex;">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
     <title>@ViewData["Title"] - KeySystemsExtFormViewer</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -13,8 +13,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all-debug.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/classic/theme-classic/theme-classic-debug.js"></script>
 </head>
-<body style="box-sizing: content-box; height:92vh"> @* TODO: ИЗБАВИТЬСЯ ОТ VH *@
-    <header>
+<body style="box-sizing: content-box; flex: 1;display: flex; flex-direction: column;">
+    <header style="width:100%;">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">KeySystemsExtFormViewer</a>
