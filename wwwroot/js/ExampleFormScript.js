@@ -49,14 +49,6 @@ var buttons = [
     }
 ];
 
-//пример определения своего класса
-Ext.define('TreeButtons', {
-    extend: 'Ext.Panel',
-    height: "100%",
-    layout: 'vbox',
-    items: buttons
-})
-
 //сам код
 Ext.application({
     name: 'MyApp',
@@ -134,6 +126,12 @@ Ext.application({
         var treePanel = Ext.create('Ext.tree.Panel', {
             flex: 1,
             frame: true,
+            headerPosition: 'left',
+            header: {
+                titlePosition: 99,
+                items: [...buttons
+                ]
+            },
             height: '100%',
             rootVisible: true,
             store: treeStore
@@ -147,25 +145,23 @@ Ext.application({
             items: [
                 Ext.create('Ext.Panel', {
                     flex: 1,
+                    headerPosition: 'bottom',
+                    header: {
+                        titlePosition: 99,
+                        items: [
+                            {
+                                xtype: 'textfield',
+                                labelWidth: false,
+                                name: 'search',
+                                fieldLabel: 'Найти:',
+                            },
+                            ...buttons.slice(0, 2),
+                        ]
+                    },
                     width: '100%',
                     layout: 'hbox',
                     items: [
-                        Ext.create('TreeButtons'),
                         treePanel
-                    ]
-                }),
-                Ext.create('Ext.Panel', {
-                    frame: true,
-                    layout: 'hbox',
-                    items: [
-                        {
-                            xtype: 'textfield',
-                            flex: 1,
-                            labelWidth: false,
-                            name: 'search',
-                            fieldLabel: 'Найти:',
-                        },
-                        ...buttons.slice(0, 2),
                     ]
                 })
             ]
@@ -176,15 +172,17 @@ Ext.application({
             title: 'Свойства атрибутов', flex: 1, height: '100%',
             layout: 'vbox',
             frame: true,
-            items: [Ext.create('Ext.form.Panel', {
-                width: '100%',
-                layout: 'hbox',
-                items: buttons.slice(0, 3),
-            }),
+            items: [
             Ext.create('Ext.grid.Panel', {
                 flex: 5,
                 frame: true,
                 width: '100%',
+                header: {
+                    titlePosition: 99,
+                    items: [
+                        ...buttons.slice(0, 3),
+                    ]
+                },
                 store: Ext.create('Ext.data.Store', {
                     fields: ['name', 'value'],
                     data: [
@@ -212,26 +210,37 @@ Ext.application({
                 layout: 'vbox',
                 tooltip: 'Контроль уникальности',
                 frame: true,
+
                 items: [
-                    Ext.create('Ext.form.Panel', {
-                        width: '100%',
-                        layout: {
-                            type: 'hbox',
-                            align: 'center'
-                        },
-                        items: [...buttons.slice(0, 3),
-                        {
-                            xtype: 'textfield',
-                            labelWidth: false,
-                            name: 'filter',
-                            fieldLabel: 'Фильтр:',
-                        },]
-                    }),
                     Ext.create('Ext.form.Panel', {
                         width: '100%',
                         flex: 5,
                         frame: true,
                         defaultType: 'checkbox',
+
+                        header: {
+                            titlePosition: 99,
+                            items: [
+                                {
+                                    type: 'plus',
+                                    handler: function () { }
+                                },
+                                {
+                                    type: 'minus',
+                                    handler: function () { }
+                                },
+                                {
+                                    type: 'save',
+                                    handler: function () { }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    labelWidth: false,
+                                    name: 'filter',
+                                    fieldLabel: 'Фильтр:',
+                                }
+                            ]
+                        },
                         items: [
                             {
                                 boxLabel: 'Комбинации',
@@ -259,13 +268,15 @@ Ext.application({
                         flex: 3,
                         split: true,
                         collapsible: true,
+                        hideCollapseTool: true,
                         frame: true,
+                        header: {
+                            titlePosition: 99,
+                            items: [
+                                ...buttons.slice(0, 3),
+                            ]
+                        },
                         items: [
-                            Ext.create('Ext.form.Panel', {
-                                layout: 'hbox',
-                                width: '100%',
-                                items: buttons.slice(0, 3)
-                            }),
                             Ext.create('Ext.form.Panel', {
                                 flex: 3,
                                 width: '100%',
@@ -291,14 +302,15 @@ Ext.application({
         });
 
         //раскидывание элементов по местам
-        Ext.create('Ext.form.Panel', {
-            items: buttons,
-            renderTo: container,
-        })
         Ext.create('Ext.Panel', {
             height: '100%',
             layout: 'vbox',
             bodyPadding: 10,
+            header: {
+                titlePosition: 99,
+                items: [...buttons
+                ]
+            },
             renderTo: container,
             items: [
                 Ext.create('Ext.Panel', {
